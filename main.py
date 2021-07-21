@@ -21,7 +21,8 @@ def analyze_raw_data(data, context):
     tickers = []
     updated_fields = {}
     # yahoo finance comments are associated with their parent discussion's ticker
-    if type != "yahoo_finance_comment":
+    # stocktwits posts are already labeled with tickers upon scraping
+    if type != "yahoo_finance_comment" and type != "stocktwits_post":
         tickers = get_tickers_present(content)
         updated_fields["tickers"] = tickers
 
