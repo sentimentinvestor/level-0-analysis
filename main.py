@@ -16,6 +16,7 @@ def analyze_raw_data(data, context):
 
     content = data["value"]["fields"]["content"]["stringValue"]
     type = data["value"]["fields"]["type"]["stringValue"]
+    has_sentiment_score = data["value"]["fields"].get("sentiment") is not None
 
     # set tickers to an empty list so that the variable is initialized
     tickers = []
@@ -27,7 +28,7 @@ def analyze_raw_data(data, context):
         updated_fields["tickers"] = tickers
 
 
-    if len(tickers) > 0 or type == "yahoo_finance_comment":
+    if len(tickers) > 0 and not (type == "yahoo_finance_comment" and has_sentiment_score):
         sentiment = analyze_sentiment(content)
         updated_fields["sentiment"] = sentiment
 
